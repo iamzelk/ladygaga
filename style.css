@@ -2,7 +2,7 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212;
+    background-color: #191414; /* Fundo escuro do Spotify */
     color: #ffffff;
     transition: background-color 0.3s ease;
 }
@@ -45,6 +45,7 @@ main {
 .album-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid #1DB954; /* Borda verde ao passar o mouse */
 }
 
 .album-card img {
@@ -81,7 +82,7 @@ main {
 }
 
 .play-button:hover {
-    color: #ffffff;
+    color: #1DB954; /* Verde do Spotify ao passar o mouse */
 }
 
 .album-card p {
@@ -176,7 +177,7 @@ main {
 }
 
 .controls .control-button:hover {
-    color: #ffffff;
+    color: #1DB954; /* Verde do Spotify ao passar o mouse */
 }
 
 .controls .play-pause {
@@ -206,7 +207,7 @@ main {
 }
 
 .progress {
-    background-color: #ffffff;
+    background-color: #1DB954; /* Verde na barra de progresso */
     height: 100%;
     width: 0%;
     border-radius: inherit;
@@ -238,7 +239,7 @@ main {
 }
 
 .volume-button:hover {
-    color: #ffffff;
+    color: #1DB954; /* Verde do Spotify ao passar o mouse */
 }
 
 .volume-slider {
