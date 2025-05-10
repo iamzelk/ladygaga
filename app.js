@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Just Dance', 'LoveGame', 'Paparazzi', 'Poker Face'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#443a6f' // Um roxo escuro
         },
         {
             title: 'The Fame Monster',
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Bad Romance', 'Alejandro', 'Monster', 'Telephone'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#a83c32' // Um vermelho escuro
         },
         {
             title: 'Born This Way',
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Marry The Night', 'Born This Way', 'Judas', 'The Edge Of Glory'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#3e606f'
         },
         {
             title: 'ARTPOP',
@@ -62,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Aura', 'Venus', 'G.U.Y', 'Applause'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#9c6644'
         },
         {
             title: 'Joanne',
@@ -72,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['A-YO', 'John Wayne', 'Dancin In Circles', 'Million Reasons'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#545e3c'
         },
         {
             title: 'Chromatica',
@@ -82,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Stupid Love', 'Rain On Me', '911', 'Replay'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#880e4f' // Um rosa escuro
         },
         {
             title: 'MAYHEM',
@@ -92,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackTitles: ['Disease', 'Abracadabra', 'Perfect Celebrity', 'Vanish Into You'],
             artist: 'Lady Gaga',
             currentTrackIndex: 0,
-            backgroundColor: '#222f3e'
         }
     ];
 
