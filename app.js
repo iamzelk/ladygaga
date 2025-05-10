@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadAndPlayTrack() {
-        audioElement.src = `/audio/<span class="math-inline">\{currentAlbum\.title\}/</span>{currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
+        audioElement.src = `<span class="math-inline">\{window\.location\.origin\}/ladygaga/audio/</span>{currentAlbum.title}/${currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
     }
 
     // Atualiza as informações exibidas no player
