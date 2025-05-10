@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadAndPlayTrack() {
-        audioElement.src = `/audio/${currentAlbum.title}/${currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
+        audioElement.src = `/audio/<span class="math-inline">\{currentAlbum\.title\}/</span>{currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
     }
 
     // Atualiza as informações exibidas no player
