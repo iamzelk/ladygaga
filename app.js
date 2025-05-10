@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const playPauseButton = document.querySelector('.play-pause');
     const playIcon = document.querySelector('.play-icon');
     const pauseIcon = document.querySelector('.pause-icon');
-    const progressBar = document.querySelector('.progress-bar'); // Alterado para .progress-bar
-    const progressDisplay = document.querySelector('.progress'); // Novo: Elemento para a barra de progresso visual
+    const progressBar = document.querySelector('.progress-bar');
+    const progressDisplay = document.querySelector('.progress');
     const currentTimeDisplay = document.querySelector('#current-time');
     const durationDisplay = document.querySelector('#duration');
     const volumeButton = document.querySelector('.volume-button');
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Estado do Player ---
     let currentAlbum = null;
     let isPlaying = false;
-    let originalBackgroundColor = '#121212'; // Cor de fundo padrão
+    let originalBackgroundColor = '#121212';
 
     // --- Dados dos Álbuns ---
     const albumsData = [
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['01-just_dance.mp3', '02-lovegame.mp3', '03-paparazzi.mp3', '04-poker_face.mp3'],
             trackTitles: ['Just Dance', 'LoveGame', 'Paparazzi', 'Poker Face'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#443a6f'
         },
         {
             title: 'The Fame Monster',
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['01-bad_romance.mp3', '02-alejandro.mp3', '03-monster.mp3', '06-telephone.mp3'],
             trackTitles: ['Bad Romance', 'Alejandro', 'Monster', 'Telephone'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#a83c32'
         },
         {
             title: 'Born This Way',
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['01-marry_the_night.mp3', '02-born_this_way.mp3', '04-judas.mp3', '14-the_edge_of_glory.mp3'],
             trackTitles: ['Marry The Night', 'Born This Way', 'Judas', 'The Edge Of Glory'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#3e606f'
         },
         {
             title: 'ARTPOP',
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['01-aura.mp3', '02-venus.mp3', '03-g_u_y.mp3', '14-applause.mp3'],
             trackTitles: ['Aura', 'Venus', 'G.U.Y', 'Applause'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#9c6644'
         },
         {
             title: 'Joanne',
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['02-a_yo.mp3', '04-john_wayne.mp3', '05-dancin_ in_circles.mp3', '07-million_reasons.mp3'],
             trackTitles: ['A-YO', 'John Wayne', 'Dancin In Circles', 'Million Reasons'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#545e3c'
         },
         {
             title: 'Chromatica',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['03-stupid_love.mp3', '04-rain_on_me.mp3', '08-911.mp3', '12-replay.mp3'],
             trackTitles: ['Stupid Love', 'Rain On Me', '911', 'Replay'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#880e4f'
         },
         {
             title: 'MAYHEM',
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioFiles: ['01-disease.mp3', '02-abracadabra.mp3', '04-perfect_celebrity.mp3', '05-vanish_into_you.mp3'],
             trackTitles: ['Disease', 'Abracadabra', 'Perfect Celebrity', 'Vanish Into You'],
             artist: 'Lady Gaga',
-            currentTrackIndex: 0,
+            backgroundColor: '#222f3e'
         }
     ];
 
@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         albumsData.forEach(album => {
             const albumDiv = document.createElement('div');
             albumDiv.classList.add('album-card');
+            albumDiv.style.backgroundColor = album.backgroundColor;
 
             const coverImg = document.createElement('img');
             coverImg.src = album.cover;
@@ -117,8 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             playButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                // Load and play on click of the play button
-                loadAndPlayAlbum(album);
+                loadAndPlayAlbum(album); // Chama a função ao clicar no botão
             });
 
             titleContainer.appendChild(titleHeading);
@@ -132,8 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             albumDiv.appendChild(yearParagraph);
 
             albumDiv.addEventListener('click', () => {
-                // Load and play on click of the album card
-                loadAndPlayAlbum(album);
+                loadAndPlayAlbum(album); // Chama a função ao clicar no card
             });
 
             albumContainer.appendChild(albumDiv);
@@ -148,11 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         currentAlbum = album;
-        currentAlbum.currentTrackIndex = 0;
-        loadAndPlayTrack();
-        updatePlayerDisplay();
+        currentAlbum.currentTrackIndex = 0; // Reseta o índice da faixa ao carregar um novo álbum
+        updateBackgroundColor(album.backgroundColor); // Atualiza a cor de fundo
+        loadAndPlayTrack(); // Carrega e toca a primeira faixa do álbum
+        updatePlayerDisplay(); // Atualiza o display do player
+    }
 
-        // Start playing the audio
+    // Carrega e toca a faixa atual
+    function loadAndPlayTrack() {
+        if (!currentAlbum || !currentAlbum.audioFiles || currentAlbum.audioFiles.length === 0) {
+            console.error("Álbum ou faixas de áudio inválidos.");
+            return;
+        }
+
+        const trackPath = `audio/${currentAlbum.title}/${currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
+        audioElement.src = trackPath;
+
         audioElement.play()
             .then(() => {
                 isPlaying = true;
@@ -165,10 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function loadAndPlayTrack() {
-        audioElement.src = `<span class="math-inline">\{window\.location\.origin\}/ladygaga/audio/</span>{currentAlbum.title}/${currentAlbum.audioFiles[currentAlbum.currentTrackIndex]}`;
-    }
-
     // Atualiza as informações exibidas no player
     function updatePlayerDisplay() {
         if (!currentAlbum) return;
@@ -178,48 +184,34 @@ document.addEventListener('DOMContentLoaded', () => {
         playerArtist.textContent = currentAlbum.artist;
     }
 
+    // Função para tocar a próxima faixa
     function playNextTrack() {
         if (!currentAlbum) return;
+
         currentAlbum.currentTrackIndex++;
         if (currentAlbum.currentTrackIndex >= currentAlbum.audioFiles.length) {
-            currentAlbum.currentTrackIndex = 0;
+            currentAlbum.currentTrackIndex = 0; // Volta para a primeira faixa se chegar ao final
         }
         loadAndPlayTrack();
         updatePlayerDisplay();
-        audioElement.play()
-            .then(() => {
-                isPlaying = true;
-                updatePlayPauseIcons();
-            })
-            .catch(error => {
-                console.error("Erro ao reproduzir a próxima faixa:", error);
-                isPlaying = false;
-                updatePlayPauseIcons();
-            });
     }
 
+    // Função para tocar a faixa anterior
     function playPreviousTrack() {
         if (!currentAlbum) return;
+
         currentAlbum.currentTrackIndex--;
         if (currentAlbum.currentTrackIndex < 0) {
-            currentAlbum.currentTrackIndex = currentAlbum.audioFiles.length - 1;
+            currentAlbum.currentTrackIndex = currentAlbum.audioFiles.length - 1; // Vai para a última faixa se estiver na primeira
         }
         loadAndPlayTrack();
         updatePlayerDisplay();
-        audioElement.play()
-            .then(() => {
-                isPlaying = true;
-                updatePlayPauseIcons();
-            })
-            .catch(error => {
-                console.error("Erro ao reproduzir a faixa anterior:", error);
-                isPlaying = false;
-                updatePlayPauseIcons();
-            });
     }
 
     // Alterna entre play e pause
     playPauseButton.addEventListener('click', () => {
+        if (!currentAlbum) return; // Não faz nada se nenhum álbum estiver carregado
+
         if (isPlaying) {
             audioElement.pause();
         } else {
@@ -241,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     audioElement.addEventListener('timeupdate', () => {
         if (audioElement.duration) {
             const progress = (audioElement.currentTime / audioElement.duration) * 100;
-            progressDisplay.style.width = `${progress}%`; // Atualiza a barra de progresso visual
+            progressDisplay.style.width = `${progress}%`;
             currentTimeDisplay.textContent = formatTime(audioElement.currentTime);
         }
     });
@@ -262,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Permite que o usuário clique na barra de progresso para alterar o tempo
     progressBar.addEventListener('click', (event) => {
-        if (audioElement.duration) {
+        if (audioElement.duration && currentAlbum) { // Verifica se há um álbum carregado
             const clickPosition = event.offsetX / progressBar.offsetWidth;
             audioElement.currentTime = audioElement.duration * clickPosition;
         }
@@ -270,29 +262,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Controla o volume
     volumeButton.addEventListener('click', () => {
+        if (!currentAlbum) return;
         audioElement.muted = !audioElement.muted;
         volumeButton.innerHTML = audioElement.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
     });
 
     // Controla o volume com o slider
     volumeSlider.addEventListener('input', () => {
+        if (!currentAlbum) return;
         audioElement.volume = volumeSlider.value;
     });
 
     audioElement.volume = 0.5; // Volume inicial
 
-    // --- Inicialização ---
-    createAlbumCards();
+    // Função para atualizar a cor de fundo da página
+    function updateBackgroundColor(color) {
+        document.body.style.backgroundColor = color;
+    }
 
+    // --- Inicialização ---
+    createAlbumCards(); // Cria os cards dos álbuns na inicialização
+
+    // Event listeners para os botões de próximo e anterior
     nextButton.addEventListener('click', () => {
         if (currentAlbum) {
             playNextTrack();
         }
     });
+
     prevButton.addEventListener('click', () => {
         if (currentAlbum) {
             playPreviousTrack();
         }
     });
-
 });
