@@ -148,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentAlbum = album;
         currentAlbum.currentTrackIndex = 0; // Reseta o índice da faixa ao carregar um novo álbum
-        updateBackgroundColor(album.backgroundColor); // Atualiza a cor de fundo
         loadAndPlayTrack(); // Carrega e toca a primeira faixa do álbum
         updatePlayerDisplay(); // Atualiza o display do player
     }
@@ -274,11 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     audioElement.volume = 0.5; // Volume inicial
-
-    // Função para atualizar a cor de fundo da página
-    function updateBackgroundColor(color) {
-        document.body.style.backgroundColor = color;
-    }
 
     // --- Inicialização ---
     createAlbumCards(); // Cria os cards dos álbuns na inicialização
