@@ -1,0 +1,278 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+main {
+    padding: 20px;
+    overflow: hidden;
+}
+
+.album-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.album-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.album-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.album-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.album-card h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-right: 10px;
+}
+
+.play-button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 0.8em;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    transition: color 0.2s ease;
+}
+
+.play-button:hover {
+    color: #ffffff;
+}
+
+.album-card p {
+    margin: 0;
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+.audio-player {
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #ffffff;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.audio-left,
+.audio-right {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 200px;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.audio-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.audio-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.track-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#player-title {
+    color: #ffffff;
+    font-size: 1em;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    width: 200px;
+}
+
+#player-artist {
+    font-size: 0.8em;
+    color: #eeeeee;
+}
+
+.audio-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 5px;
+}
+
+.controls .control-button {
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 1.1em;
+    margin: 0 10px;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.2s ease;
+}
+
+.controls .control-button:hover {
+    color: #ffffff;
+}
+
+.controls .play-pause {
+    font-size: 1.8em;
+    margin: 0 20px;
+    position: relative;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 250px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.progress {
+    background-color: #ffffff;
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+}
+
+#current-time,
+#duration {
+    font-size: 0.7em;
+    color: #999;
+    min-width: 30px;
+    text-align: center;
+}
+
+.audio-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.volume-button {
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 1.1em;
+    margin-right: 10px;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.2s ease;
+}
+
+.volume-button:hover {
+    color: #ffffff;
+}
+
+.volume-slider {
+    width: 80px;
+    background-color: #333;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: none;
+    margin-top: -3px;
+    transition: background-color 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    background-color: #dddddd;
+}
+
+.audio-player audio {
+    display: none;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #777;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.75em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
