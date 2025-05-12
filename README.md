@@ -1,4 +1,4 @@
-# 🎵 Lady Gaga Álbum Player
+# Lady Gaga Álbum Player 🎵
 
 Um reprodutor de música web dedicado aos álbuns da Lady Gaga. Com um visual moderno e responsivo, o projeto permite que os usuários explorem os álbuns da artista, escolham um álbum e ouçam as faixas disponíveis com controles completos de reprodução.
 
