@@ -48,8 +48,8 @@ Um reprodutor de música web dedicado aos álbuns da Lady Gaga. Com um visual mo
 
 ## 👤 Créditos
 
-* **Design e desenvolvimento:** \[Seu Nome]
-* **Dados dos álbuns:** \[Fonte, se aplicável]
+* **Design e desenvolvimento:** Zelk
+* **Dados dos álbuns:** Apple Music
 * **Músicas:** © Lady Gaga — Todos os direitos reservados às gravadoras:
 
   * **The Fame (2008)** – *Interscope Records, Streamline Records, KonLive Distribution*
