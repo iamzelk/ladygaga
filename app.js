@@ -316,14 +316,12 @@ document.addEventListener('DOMContentLoaded', () => {
     repeatButton.addEventListener('click', () => {
         isRepeat = !isRepeat;
         repeatButton.classList.toggle('active', isRepeat);
-        // Altera a cor do botão de repetir
         repeatButton.style.color = isRepeat ? '#0075ff' : '#cccccc';
     });
 
     randomButton.addEventListener('click', () => {
         isRandom = !isRandom;
         randomButton.classList.toggle('active', isRandom);
-        // Altera a cor do botão aleatório
         randomButton.style.color = isRandom ? '#0075ff' : '#cccccc';
     });
 
