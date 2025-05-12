@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let isRepeat = false;
     let isRandom = false;
-    let currentTrackIndex = 0;
+    let currentTrackIndex = 0; // Mova para fora da função loadAndPlayAlbum
 
     // --- Dados dos Álbuns ---
     const albumsData = [
@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'The Fame',
             year: 2008,
             cover: 'img/the_fame.jpg',
-            audioFiles: ['01-just_dance.mp3', '02-lovegame.mp3', '03-paparazzi.mp3', '04-poker_face.mp3', '07-the_fame.mp3'],
-            trackTitles: ['Just Dance', 'LoveGame', 'Paparazzi', 'Poker Face', 'The Fame'],
+            audioFiles: ['01-just_dance.mp3', '02-lovegame.mp3', '03-paparazzi.mp3', '04-poker_face.mp3'],
+            trackTitles: ['Just Dance', 'LoveGame', 'Paparazzi', 'Poker Face'],
             artist: 'Lady Gaga',
             backgroundColor: '#443a6f'
         },
@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'The Fame Monster',
             year: 2009,
             cover: 'img/the_fame_monster.jpg',
-            audioFiles: ['01-bad_romance.mp3', '02-alejandro.mp3', '03-monster.mp3', '05-dance_in_the_dark.mp3', '06-telephone.mp3'],
-            trackTitles: ['Bad Romance', 'Alejandro', 'Monster', 'Dance In The Dark', 'Telephone'],
+            audioFiles: ['01-bad_romance.mp3', '02-alejandro.mp3', '03-monster.mp3', '06-telephone.mp3'],
+            trackTitles: ['Bad Romance', 'Alejandro', 'Monster', 'Telephone'],
             artist: 'Lady Gaga',
             backgroundColor: '#a83c32'
         },
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Born This Way',
             year: 2011,
             cover: 'img/born_this_way.jpg',
-            audioFiles: ['01-marry_the_night.mp3', '02-born_this_way.mp3', '04-judas.mp3', '13-you_and_i.mp3', '14-the_edge_of_glory.mp3'],
-            trackTitles: ['Marry The Night', 'Born This Way', 'Judas', 'Yoü And I', 'The Edge Of Glory'],
+            audioFiles: ['01-marry_the_night.mp3', '02-born_this_way.mp3', '04-judas.mp3', '14-the_edge_of_glory.mp3'],
+            trackTitles: ['Marry The Night', 'Born This Way', 'Judas', 'The Edge Of Glory'],
             artist: 'Lady Gaga',
             backgroundColor: '#3e606f'
         },
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'ARTPOP',
             year: 2013,
             cover: 'img/ARTPOP.jpg',
-            audioFiles: ['01-aura.mp3', '02-venus.mp3', '03-g_u_y.mp3', '09-donatella.mp3', '14-applause.mp3'],
-            trackTitles: ['Aura', 'Venus', 'G.U.Y', 'Donatella', 'Applause'],
+            audioFiles: ['01-aura.mp3', '02-venus.mp3', '03-g_u_y.mp3', '14-applause.mp3'],
+            trackTitles: ['Aura', 'Venus', 'G.U.Y', 'Applause'],
             artist: 'Lady Gaga',
             backgroundColor: '#9c6644'
         },
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Joanne',
             year: 2016,
             cover: 'img/joanne.jpg',
-            audioFiles: ['01-diamond_heart.mp3', '02-a_yo.mp3', '04-john_wayne.mp3', '05-dancin_ in_circles.mp3', '07-million_reasons.mp3'],
-            trackTitles: ['Diamond Heart', 'A-YO', 'John Wayne', 'Dancin In Circles', 'Million Reasons'],
+            audioFiles: ['02-a_yo.mp3', '04-john_wayne.mp3', '05-dancin_ in_circles.mp3', '07-million_reasons.mp3'],
+            trackTitles: ['A-YO', 'John Wayne', 'Dancin In Circles', 'Million Reasons'],
             artist: 'Lady Gaga',
             backgroundColor: '#545e3c'
         },
@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Chromatica',
             year: 2020,
             cover: 'img/chromatica.jpg',
-            audioFiles: ['03-stupid_love.mp3', '04-rain_on_me.mp3', '08-911.mp3', '12-replay.mp3', '16-babylon.mp3'],
-            trackTitles: ['Stupid Love', 'Rain On Me', '911', 'Replay', 'Babylon'],
+            audioFiles: ['03-stupid_love.mp3', '04-rain_on_me.mp3', '08-911.mp3', '12-replay.mp3'],
+            trackTitles: ['Stupid Love', 'Rain On Me', '911', 'Replay'],
             artist: 'Lady Gaga',
             backgroundColor: '#880e4f'
         },
@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'MAYHEM',
             year: 2025,
             cover: 'img/MAYHEM.jpg',
-            audioFiles: ['01-disease.mp3', '02-abracadabra.mp3', '03-garden_of_eden.mp3', '04-perfect_celebrity.mp3', '05-vanish_into_you.mp3'],
-            trackTitles: ['Disease', 'Abracadabra', 'Garden Of Eden', 'Perfect Celebrity', 'Vanish Into You'],
+            audioFiles: ['01-disease.mp3', '02-abracadabra.mp3', '04-perfect_celebrity.mp3', '05-vanish_into_you.mp3'],
+            trackTitles: ['Disease', 'Abracadabra', 'Perfect Celebrity', 'Vanish Into You'],
             artist: 'Lady Gaga',
             backgroundColor: '#222f3e'
         }
@@ -97,12 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cria os cards de álbum na interface
     function createAlbumCards() {
-        albumContainer.innerHTML = '';
-        albumsData.forEach((album, index) => {
+        albumContainer.innerHTML = ''; // Limpa o container antes de adicionar os cards
+        albumsData.forEach((album, index) => { // Adiciona o índice do álbum
             const albumDiv = document.createElement('div');
             albumDiv.classList.add('album-card');
             albumDiv.style.backgroundColor = album.backgroundColor;
-            albumDiv.dataset.albumIndex = index;
+            albumDiv.dataset.albumIndex = index; // Armazena o índice do álbum no dataset
 
             const coverImg = document.createElement('img');
             coverImg.src = album.cover;
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             titleHeading.textContent = album.title;
             titleHeading.addEventListener('click', (event) => {
                 event.stopPropagation();
-                loadAndPlayAlbum(index);
+                loadAndPlayAlbum(index); // Passa o índice do álbum
             });
             titleHeading.style.cursor = 'pointer';
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             playButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                loadAndPlayAlbum(index);
+                loadAndPlayAlbum(index); // Passa o índice do álbum
             });
 
             titleContainer.appendChild(titleHeading);
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             albumDiv.appendChild(yearParagraph);
 
             albumDiv.addEventListener('click', () => {
-                loadAndPlayAlbum(index);
+                loadAndPlayAlbum(index); // Passa o índice do álbum
             });
 
             albumContainer.appendChild(albumDiv);
@@ -147,16 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carrega os dados do álbum e inicia a reprodução
     function loadAndPlayAlbum(albumIndex) {
-        const album = albumsData[albumIndex];
+        const album = albumsData[albumIndex]; // Usa o índice para obter o álbum correto
         if (!album || !album.audioFiles || album.audioFiles.length === 0) {
             console.error("Álbum inválido ou sem faixas de áudio.");
             return;
         }
 
         currentAlbum = album;
-        currentTrackIndex = 0;
-        loadAndPlayTrack();
-        updatePlayerDisplay();
+        currentTrackIndex = 0; // Reseta o índice da faixa ao carregar um novo álbum
+        loadAndPlayTrack(); // Carrega e toca a primeira faixa do álbum
+        updatePlayerDisplay(); // Atualiza o display do player
     }
 
     // Carrega e toca a faixa atual
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentAlbum) return;
 
         playerCover.src = currentAlbum.cover;
-        playerTitle.textContent = `${currentAlbum.trackTitles[currentTrackIndex]}`;
+        playerTitle.textContent = `${currentAlbum.trackTitles[currentTrackIndex]}`; // Remove o número da faixa
         playerArtist.textContent = currentAlbum.artist;
     }
 
@@ -197,12 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
             let newTrackIndex;
             do {
                 newTrackIndex = Math.floor(Math.random() * currentAlbum.audioFiles.length);
-            } while (newTrackIndex === currentTrackIndex);
+            } while (newTrackIndex === currentTrackIndex); // Evita repetir a mesma faixa
             currentTrackIndex = newTrackIndex;
         } else {
             currentTrackIndex++;
             if (currentTrackIndex >= currentAlbum.audioFiles.length) {
-                currentTrackIndex = 0;
+                currentTrackIndex = 0; // Volta para a primeira faixa se chegar ao final
             }
         }
         loadAndPlayTrack();
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             currentTrackIndex--;
             if (currentTrackIndex < 0) {
-                currentTrackIndex = currentAlbum.audioFiles.length - 1;
+                currentTrackIndex = currentAlbum.audioFiles.length - 1; // Vai para a última faixa se estiver na primeira
             }
         }
         loadAndPlayTrack();
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Alterna entre play e pause
     playPauseButton.addEventListener('click', () => {
-        if (!currentAlbum) return;
+        if (!currentAlbum) return; // Não faz nada se nenhum álbum estiver carregado
 
         if (isPlaying) {
             audioElement.pause();
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Permite que o usuário clique na barra de progresso para alterar o tempo
     progressBar.addEventListener('click', (event) => {
-        if (audioElement.duration && currentAlbum) {
+        if (audioElement.duration && currentAlbum) { // Verifica se há um álbum carregado
             const clickPosition = event.offsetX / progressBar.offsetWidth;
             audioElement.currentTime = audioElement.duration * clickPosition;
         }
@@ -294,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
         audioElement.volume = volumeSlider.value;
     });
 
-    audioElement.volume = 0.5;
+    audioElement.volume = 0.5; // Volume inicial
 
     // --- Inicialização ---
-    createAlbumCards();
+    createAlbumCards(); // Cria os cards dos álbuns na inicialização
 
     // Event listeners para os botões de próximo e anterior
     nextButton.addEventListener('click', () => {
@@ -315,21 +315,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners para os botões de repetir e aleatório
     repeatButton.addEventListener('click', () => {
         isRepeat = !isRepeat;
-        repeatButton.classList.toggle('active', isRepeat);
+        repeatButton.classList.toggle('active', isRepeat); // Adiciona/remove a classe 'active'
+        // Altera a cor do botão de repetir
         repeatButton.style.color = isRepeat ? '#0075ff' : '#cccccc';
     });
 
     randomButton.addEventListener('click', () => {
         isRandom = !isRandom;
-        randomButton.classList.toggle('active', isRandom);
+        randomButton.classList.toggle('active', isRandom); // Adiciona/remove a classe 'active'
+        // Altera a cor do botão aleatório
         randomButton.style.color = isRandom ? '#0075ff' : '#cccccc';
     });
 
-    audioElement.addEventListener('ended', () => {
+    // Garante que o estado inicial seja aplicado corretamente
+    repeatButton.style.color = isRepeat ? '#0075ff' : '#cccccc';
+    randomButton.style.color = isRandom ? '#0075ff' : '#cccccc';
+
+    audioElement.addEventListener('ended', () => { // Ouvinte para quando a música termina
         if (isRepeat) {
-            audioElement.play();
+            audioElement.play(); // Repete a música atual
         } else {
-            playNextTrack();
+            playNextTrack(); // Toca a próxima música
         }
     });
 });
