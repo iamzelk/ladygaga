@@ -46,31 +46,6 @@ Um reprodutor de música web dedicado aos álbuns da Lady Gaga. Com um visual mo
 
 ![divider](https://github.com/user-attachments/assets/bfae75fb-5017-4780-a572-92ec06fbfe8f)
 
-### 👤 Créditos
-
-* **Design e desenvolvimento:** \[Seu Nome]
-* **Dados dos álbuns:** \[Fonte, se aplicável]
-* **Músicas:** © Lady Gaga
-
-![divider](https://github.com/user-attachments/assets/bfae75fb-5017-4780-a572-92ec06fbfe8f)
-
-## 📄 Licença
-
-\[Adicione aqui a licença do seu projeto, como MIT, GPL, etc.]
-
-
-Claro! Abaixo está a seção de **Créditos** atualizada com a gravadora responsável pelas músicas da Lady Gaga:
-
----
-
-## 👤 Créditos
-
-* **Design e desenvolvimento:** \[Seu Nome]
-* **Dados dos álbuns:** \[Fonte, se aplicável]
-* Perfeito! Aqui está uma versão personalizada da seção **Créditos**, com as gravadoras organizadas conforme os álbuns mais conhecidos da Lady Gaga (caso tenha usado todos ou a maioria deles no projeto):
-
----
-
 ## 👤 Créditos
 
 * **Design e desenvolvimento:** \[Seu Nome]
@@ -84,8 +59,3 @@ Claro! Abaixo está a seção de **Créditos** atualizada com a gravadora respon
   * **Joanne (2016)** – *Interscope Records, Streamline Records*
   * **Chromatica (2020)** – *Interscope Records, Streamline Records*
   * **MAYHEM (2025)** – *Interscope Records, Streamline Records*
-
----
-
-Se você não usou todos esses álbuns, posso ajustar a lista para incluir apenas os que aparecem no seu projeto. Quer que eu faça isso? Se quiser, pode me passar a lista dos álbuns incluídos.
-
