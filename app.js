@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let isRepeat = false;
     let isRandom = false;
-    let currentTrackIndex = 0; // Mova para fora da função loadAndPlayAlbum
+    let currentTrackIndex = 0;
 
-    // --- Dados dos Álbuns ---
+    // --- Dados dos Álbuns da Lady Gaga ---
     const albumsData = [
         {
             title: 'The Fame',
@@ -97,48 +97,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cria os cards de álbum na interface
     function createAlbumCards() {
-        albumContainer.innerHTML = ''; // Limpa o container antes de adicionar os cards
-        albumsData.forEach((album, index) => { // Adiciona o índice do álbum
+        albumContainer.innerHTML = '';
+        albumsData.forEach((album, index) => {
             const albumDiv = document.createElement('div');
             albumDiv.classList.add('album-card');
-            albumDiv.style.backgroundColor = album.backgroundColor;
+            // ESTA LINHA APLICA A COR DE FUNDO DO ÁLBUM:
+            albumDiv.style.backgroundColor = album.backgroundColor; 
             albumDiv.dataset.albumIndex = index; // Armazena o índice do álbum no dataset
+
+            const coverWrapper = document.createElement('div');
+            coverWrapper.classList.add('cover-wrapper');
 
             const coverImg = document.createElement('img');
             coverImg.src = album.cover;
             coverImg.alt = `Capa do álbum ${album.title}`;
-
-            const titleContainer = document.createElement('div');
-            titleContainer.classList.add('title-container');
-
-            const titleHeading = document.createElement('h2');
-            titleHeading.textContent = album.title;
-            titleHeading.addEventListener('click', (event) => {
-                event.stopPropagation();
-                loadAndPlayAlbum(index); // Passa o índice do álbum
-            });
-            titleHeading.style.cursor = 'pointer';
 
             const playButton = document.createElement('button');
             playButton.classList.add('play-button');
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             playButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                loadAndPlayAlbum(index); // Passa o índice do álbum
+                
+                if (currentAlbum === album && isPlaying) {
+                    audioElement.pause();
+                    isPlaying = false;
+                } else if (currentAlbum === album && !isPlaying) {
+                    audioElement.play();
+                    isPlaying = true;
+                } else {
+                    loadAndPlayAlbum(index);
+                }
+                updatePlayPauseIcons();
+                updateAlbumCardStates();
             });
 
-            titleContainer.appendChild(titleHeading);
-            titleContainer.appendChild(playButton);
+            coverWrapper.appendChild(coverImg);
+            coverWrapper.appendChild(playButton);
+
+            const titleHeading = document.createElement('h2');
+            titleHeading.textContent = album.title;
 
             const yearParagraph = document.createElement('p');
             yearParagraph.textContent = `Ano: ${album.year}`;
 
-            albumDiv.appendChild(coverImg);
-            albumDiv.appendChild(titleContainer);
+            albumDiv.appendChild(coverWrapper);
+            albumDiv.appendChild(titleHeading);
             albumDiv.appendChild(yearParagraph);
 
             albumDiv.addEventListener('click', () => {
-                loadAndPlayAlbum(index); // Passa o índice do álbum
+                loadAndPlayAlbum(index);
             });
 
             albumContainer.appendChild(albumDiv);
@@ -147,16 +154,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carrega os dados do álbum e inicia a reprodução
     function loadAndPlayAlbum(albumIndex) {
-        const album = albumsData[albumIndex]; // Usa o índice para obter o álbum correto
+        const album = albumsData[albumIndex];
         if (!album || !album.audioFiles || album.audioFiles.length === 0) {
             console.error("Álbum inválido ou sem faixas de áudio.");
             return;
         }
 
         currentAlbum = album;
-        currentTrackIndex = 0; // Reseta o índice da faixa ao carregar um novo álbum
-        loadAndPlayTrack(); // Carrega e toca a primeira faixa do álbum
-        updatePlayerDisplay(); // Atualiza o display do player
+        currentTrackIndex = 0;
+        loadAndPlayTrack();
+        updatePlayerDisplay();
+        updateAlbumCardStates();
     }
 
     // Carrega e toca a faixa atual
@@ -172,21 +180,58 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(() => {
                 isPlaying = true;
                 updatePlayPauseIcons();
+                updateAlbumCardStates();
             })
             .catch(error => {
                 console.error("Erro ao iniciar a reprodução:", error);
                 isPlaying = false;
                 updatePlayPauseIcons();
+                updateAlbumCardStates();
             });
     }
 
-    // Atualiza as informações exibidas no player
+    // Atualiza o estado dos ícones de play/pause nos cards de álbum
+    function updateAlbumCardStates() {
+        document.querySelectorAll('.album-card').forEach(card => {
+            card.classList.remove('active');
+            const playButton = card.querySelector('.play-button');
+            if (playButton) {
+                playButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        if (currentAlbum) {
+            const activeCardIndex = albumsData.indexOf(currentAlbum);
+            const activeCard = document.querySelector(`.album-card[data-album-index="${activeCardIndex}"]`);
+
+            if (activeCard) {
+                activeCard.classList.add('active');
+
+                const playButton = activeCard.querySelector('.play-button');
+                if (playButton) {
+                    if (isPlaying) {
+                        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        playButton.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                }
+            }
+        }
+    }
+
+    // Atualiza as informações exibidas no player principal
     function updatePlayerDisplay() {
         if (!currentAlbum) return;
 
         playerCover.src = currentAlbum.cover;
-        playerTitle.textContent = `${currentAlbum.trackTitles[currentTrackIndex]}`; // Remove o número da faixa
+        playerTitle.textContent = `${currentAlbum.trackTitles[currentTrackIndex]}`;
         playerArtist.textContent = currentAlbum.artist;
+
+        playerArtist.querySelectorAll('.verified-icon').forEach(icon => icon.remove());
+
+        const verifiedIcon = document.createElement('i');
+        verifiedIcon.classList.add('fas', 'fa-check-circle', 'verified-icon');
+        playerArtist.appendChild(verifiedIcon);
     }
 
     // Função para tocar a próxima faixa
@@ -197,16 +242,17 @@ document.addEventListener('DOMContentLoaded', () => {
             let newTrackIndex;
             do {
                 newTrackIndex = Math.floor(Math.random() * currentAlbum.audioFiles.length);
-            } while (newTrackIndex === currentTrackIndex); // Evita repetir a mesma faixa
+            } while (newTrackIndex === currentTrackIndex);
             currentTrackIndex = newTrackIndex;
         } else {
             currentTrackIndex++;
             if (currentTrackIndex >= currentAlbum.audioFiles.length) {
-                currentTrackIndex = 0; // Volta para a primeira faixa se chegar ao final
+                currentTrackIndex = 0;
             }
         }
         loadAndPlayTrack();
         updatePlayerDisplay();
+        updateAlbumCardStates();
     }
 
     // Função para tocar a faixa anterior
@@ -222,16 +268,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             currentTrackIndex--;
             if (currentTrackIndex < 0) {
-                currentTrackIndex = currentAlbum.audioFiles.length - 1; // Vai para a última faixa se estiver na primeira
+                currentTrackIndex = currentAlbum.audioFiles.length - 1;
             }
         }
         loadAndPlayTrack();
         updatePlayerDisplay();
+        updateAlbumCardStates();
     }
 
-    // Alterna entre play e pause
+    // Alterna entre play e pause no player principal
     playPauseButton.addEventListener('click', () => {
-        if (!currentAlbum) return; // Não faz nada se nenhum álbum estiver carregado
+        if (!currentAlbum) return;
 
         if (isPlaying) {
             audioElement.pause();
@@ -240,9 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         isPlaying = !isPlaying;
         updatePlayPauseIcons();
+        updateAlbumCardStates();
     });
 
-    // Atualiza os ícones do botão play/pause
+    // Atualiza os ícones do botão play/pause do player principal
     function updatePlayPauseIcons() {
         if (playIcon && pauseIcon) {
             playIcon.style.display = isPlaying ? 'none' : 'inline-block';
@@ -275,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Permite que o usuário clique na barra de progresso para alterar o tempo
     progressBar.addEventListener('click', (event) => {
-        if (audioElement.duration && currentAlbum) { // Verifica se há um álbum carregado
+        if (audioElement.duration && currentAlbum) {
             const clickPosition = event.offsetX / progressBar.offsetWidth;
             audioElement.currentTime = audioElement.duration * clickPosition;
         }
@@ -315,27 +363,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners para os botões de repetir e aleatório
     repeatButton.addEventListener('click', () => {
         isRepeat = !isRepeat;
-        repeatButton.classList.toggle('active', isRepeat); // Adiciona/remove a classe 'active'
-        // Altera a cor do botão de repetir
-        repeatButton.style.color = isRepeat ? '#0075ff' : '#cccccc';
+        repeatButton.classList.toggle('active', isRepeat);
+        repeatButton.style.color = isRepeat ? '#1db954' : '#cccccc';
     });
 
     randomButton.addEventListener('click', () => {
         isRandom = !isRandom;
-        randomButton.classList.toggle('active', isRandom); // Adiciona/remove a classe 'active'
-        // Altera a cor do botão aleatório
-        randomButton.style.color = isRandom ? '#0075ff' : '#cccccc';
+        randomButton.classList.toggle('active', isRandom);
+        randomButton.style.color = isRandom ? '#1db954' : '#cccccc';
     });
 
     // Garante que o estado inicial seja aplicado corretamente
-    repeatButton.style.color = isRepeat ? '#0075ff' : '#cccccc';
-    randomButton.style.color = isRandom ? '#0075ff' : '#cccccc';
+    repeatButton.style.color = isRepeat ? '#1db954' : '#cccccc';
+    randomButton.style.color = isRandom ? '#1db954' : '#cccccc';
 
-    audioElement.addEventListener('ended', () => { // Ouvinte para quando a música termina
+    audioElement.addEventListener('ended', () => {
         if (isRepeat) {
-            audioElement.play(); // Repete a música atual
+            audioElement.play();
         } else {
-            playNextTrack(); // Toca a próxima música
+            playNextTrack();
         }
+        updateAlbumCardStates();
+    });
+
+    // --- Sidebar Navigation ---
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach((item) => {
+        item.addEventListener("click", function () {
+            navItems.forEach((nav) => nav.classList.remove("active"));
+            this.classList.add("active");
+            console.log(`Mapsd to: ${this.querySelector('span').textContent}`);
+        });
     });
 });
