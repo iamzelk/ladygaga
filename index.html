@@ -2,61 +2,138 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Álbuns da Lady Gaga</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-     </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álbuns da Lady Gaga</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
 
 <body>
-    <header>
-        <h1>Álbuns da Lady Gaga</h1>
-    </header>
-    <main>
-        <div class="album-container" id="album-container">
-        </div>
-    </main>
-
-    <div class="audio-player">
-        <div class="audio-left">
-            <div class="audio-info">
-                <img id="player-cover" src="img/default-music.png" alt="Capa da música">
-                <div class="track-details">
-                    <div id="player-title"></div>
-                    <div id="player-artist"></div>
-                </div>
-            </div>
-        </div>
-        <div class="audio-center">
-            <div class="controls">
-                <button class="control-button"><i class="fas fa-random"></i></button>
-                <button class="control-button prev-track"><i class="fas fa-step-backward"></i></button>
-                <button class="control-button play-pause"><i class="fas fa-play fa-2x play-icon"></i><i
-                        class="fas fa-pause fa-2x pause-icon" style="display: none;"></i></button>
-                <button class="control-button next-track"><i class="fas fa-step-forward"></i></button>
-                <button class="control-button"><i class="fas fa-redo"></i></button>
-            </div>
-            <div class="progress-container">
-                <span id="current-time">0:00</span>
-                <div class="progress-bar">  <div class="progress"></div>
-                </div>
-                <span id="duration">0:00</span>
-            </div>
-        </div>
-        <div class="audio-right">
-            <div class="volume-container">
-                <button class="volume-button"><i class="fas fa-volume-up"></i></button>
-                <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
-            </div>
-        </div>
-        <audio id="audio-element"></audio>
+  <aside class="left-sidebar">
+    <div class="logo">
+      <div class="logo-icon">G</div>
+      <span class="logo-text">GagaPlayer</span>
     </div>
 
-    <script src="app.js"></script>
+    <nav class="navigation">
+      <div class="nav-item active"><i class="fas fa-home nav-icon"></i><span>Início</span></div>
+      <div class="nav-item"><i class="fas fa-compass nav-icon"></i><span>Descobrir</span></div>
+      <div class="nav-item"><i class="fas fa-broadcast-tower nav-icon"></i><span>Rádio</span></div>
+      <div class="nav-item"><i class="fas fa-compact-disc nav-icon"></i><span>Álbuns</span></div>
+      <div class="nav-item"><i class="fas fa-podcast nav-icon"></i><span>Podcasts</span></div>
+    </nav>
+
+    <div class="section">
+      <h3 class="section-title">Biblioteca</h3>
+      <div class="library-items">
+        <div class="library-item"><i class="fas fa-history library-icon"></i><span>Recentes</span></div>
+        <div class="library-item"><i class="fas fa-heart library-icon"></i><span>Favoritas</span></div>
+        <div class="library-item"><i class="fas fa-folder library-icon"></i><span>Locais</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="section-title">Playlists</h3>
+        <i class="fas fa-plus plus-icon"></i>
+      </div>
+      <div class="playlist-items">
+        <div class="playlist-item"><i class="fas fa-headphones playlist-icon"></i><span>Lo-fi Focus</span></div>
+        <div class="playlist-item"><i class="fas fa-headphones playlist-icon"></i><span>Born This Way Vibes</span></div>
+        <div class="playlist-item"><i class="fas fa-headphones playlist-icon"></i><span>Joanne Mood</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top-nav">
+      <div class="nav-controls">
+        <button class="back-btn">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item inactive">Início</span>
+          <i class="fas fa-chevron-right"></i>
+          <span class="breadcrumb-item">Lady Gaga</span>
+        </div>
+      </div>
+      <div class="search-section">
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            type="text"
+            placeholder="O que você quer ouvir?"
+          />
+        </div>
+        <button class="notification-btn">
+          <i class="fas fa-bell"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="artist-banner">
+      <img src="img/lady_gaga_banner.jpg" alt="Lady Gaga Banner" class="banner-image">
+      <div class="banner-content">
+        <div class="verified-badge"><i class="fas fa-check-circle verified-icon"></i> Artista Verificado</div>
+        <h1>Lady Gaga</h1>
+        <p>Uma superestrela e artista vencedora do Grammy, conhecida por sua versatilidade e reinvenções visuais.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-header main-content-header">
+        <h2>Álbuns Populares</h2>
+      </div>
+      <div class="album-container" id="album-container">
+        </div>
+    </section>
+  </main>
+
+  <div class="audio-player">
+    <div class="audio-left">
+      <div class="audio-info">
+        <img id="player-cover" src="img/default-music.png" alt="Capa da música" />
+        <div class="track-details">
+          <div id="player-title"></div>
+          <div id="player-artist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audio-center">
+      <div class="controls">
+        <button class="control-button"><i class="fas fa-random"></i></button>
+        <button class="control-button prev-track"><i class="fas fa-step-backward"></i></button>
+        <button class="control-button play-pause">
+          <i class="fas fa-play fa-2x play-icon"></i>
+          <i class="fas fa-pause fa-2x pause-icon" style="display: none;"></i>
+        </button>
+        <button class="control-button next-track"><i class="fas fa-step-forward"></i></button>
+        <button class="control-button"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="progress-container">
+        <span id="current-time">0:00</span>
+        <div class="progress-bar"><div class="progress"></div></div>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="audio-right">
+      <div class="volume-container">
+        <button class="volume-button"><i class="fas fa-volume-up"></i></button>
+        <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider" />
+      </div>
+    </div>
+
+    <audio id="audio-element"></audio>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 
 </html>
