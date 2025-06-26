@@ -32,17 +32,15 @@ body {
 .logo {
   display: flex; /* Mantém flex para centralizar a imagem dentro do div.logo se desejado */
   align-items: center; /* Mantém para alinhar verticalmente a imagem */
-  /* REMOVIDO: gap: 10px; - Não é mais necessário, já que não há mais ícone e texto separados */
   margin-bottom: 32px;
   justify-content: center; /* NOVO: Para centralizar a imagem horizontalmente dentro do .logo */
 }
 
-/* NOVO: Estilo para a imagem do logo */
+/* Estilo para a imagem do logo */
 .logo-image {
   width: 150px; /* Largura da sua imagem do logo, ajuste conforme necessário */
   height: auto; /* Mantém a proporção da imagem */
   display: block; /* Garante que a imagem se comporte como um bloco */
-  /* REMOVIDO: margin: 0 auto; - O justify-content: center no .logo já faz isso */
 }
 
 .navigation {
@@ -360,7 +358,7 @@ main {
     max-width: 600px;
 }
 
-/* --- NOVO: Section Header para o conteúdo principal --- */
+/* --- Section Header para o conteúdo principal --- */
 .main-content-header {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -387,7 +385,6 @@ main {
 }
 
 .album-card {
-  background-color: #181818;
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   padding: 15px;
@@ -400,8 +397,44 @@ main {
   position: relative;
 }
 
+/* NOVO: Estilo para o album-card quando é um resultado de busca */
+.album-card.search-result {
+  max-width: 150px; /* Define uma largura máxima menor para o card */
+  padding: 10px; /* Reduz o padding interno */
+  margin: 0; /* Remove margens externas para alinhamento em grids menores */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais suave */
+  /* Remove o efeito de levantar no hover se estiver no modo de resultado de busca */
+  transform: none !important; 
+  transition: all 0.3s ease-in-out; /* Transição para suavizar a mudança de tamanho */
+}
+
+/* Ajustes de texto e imagem para cards de resultado de busca */
+.album-card.search-result .cover-wrapper {
+  margin-bottom: 5px; /* Menos espaço abaixo da capa */
+}
+
+.album-card.search-result h2 {
+  font-size: 0.9em; /* Título menor */
+  line-height: 1.2;
+}
+
+.album-card.search-result p {
+  font-size: 0.75em; /* Ano menor */
+  line-height: 1;
+}
+
+.album-card.search-result .play-button {
+  width: 36px; /* Botão de play menor */
+  height: 36px;
+  bottom: 5px; /* Posicionamento ajustado */
+  right: 5px;
+}
+
+.album-card.search-result .play-button i.fas {
+  font-size: 1em; /* Ícone de play menor */
+}
+
 .album-card:hover {
-  background-color: #282828;
   transform: translateY(-8px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
   border: none;
@@ -486,13 +519,13 @@ main {
   font-size: 1.2em;
 }
 
-/* Remova ou ajuste .title-container se não for mais usado para agrupar título e botão */
-.title-container {
-    /* display: block; ou remova se não for mais usado */
-    margin-bottom: 0; /* Ajuste a margem se necessário */
+.album-card.active {
+  border: 2px solid #1db954;
+  box-shadow: 0 0 20px rgba(29, 185, 84, 0.5);
 }
 
-/* === PLAYER (Otimizações de Flexbox) === */
+
+/* === PLAYER === */
 .audio-player {
   position: fixed;
   bottom: 0;
@@ -510,9 +543,8 @@ main {
 .audio-left {
   display: flex;
   align-items: center;
-  flex: 0 0 250px; /* NOVO: Garante que esta seção tenha 250px de largura e não encolha/cresça */
-  /* Removido: min-width: 200px; (o flex-basis já lida com isso) */
-  overflow: hidden; /* Mantido para cortar texto longo */
+  flex: 0 0 250px;
+  overflow: hidden;
 }
 
 .audio-info {
@@ -563,8 +595,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1; /* NOVO: Permite que esta seção cresça para ocupar o espaço restante */
-  max-width: 500px; /* Opcional: limita a largura máxima para o player central em telas grandes */
+  flex-grow: 1;
+  max-width: 500px;
 }
 
 .controls {
@@ -633,26 +665,11 @@ main {
   text-align: center;
 }
 
-.audio-right {
-  display: flex;
-  align-items: center;
-  flex: 0 0 150px; /* NOVO: Garante que esta seção tenha 150px de largura */
-  /* Removido: min-width: 200px; */
-  justify-content: flex-end; /* Alinha o conteúdo à direita */
-}
-
-.volume-container {
-    display: flex; /* Garante que os elementos de volume fiquem lado a lado */
-    align-items: center;
-    gap: 10px; /* Espaço entre o botão e o slider */
-}
-
 .volume-button {
   background: none;
   border: none;
   color: #cccccc;
   font-size: 1.1em;
-  /* Removido: margin-right: 10px; (usar gap no container) */
   cursor: pointer;
   outline: none;
   transition: color 0.2s ease;
@@ -662,51 +679,48 @@ main {
   color: #1db954;
 }
 
+/* Estilização Completa do Volume Slider */
 .volume-slider {
-  -webkit-appearance: none; /* Remove estilos padrão WebKit */
-  -moz-appearance: none;    /* Remove estilos padrão Mozilla */
-  appearance: none;         /* Remove estilos padrão para navegadores modernos */
-  width: 100px;             /* Largura do slider (ajustado para melhor controle) */
-  height: 4px;              /* Altura da "barra" do slider */
-  background: transparent;  /* Fundo transparente, a track será estilizada */
-  outline: none;            /* Remove o contorno azul ao focar */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 4px;
+  background: transparent;
+  outline: none;
   cursor: pointer;
-  margin: 0;                /* Remove margem padrão */
+  margin: 0;
 }
 
-/* Estilo da barra (track) para WebKit (Chrome, Safari, Edge) */
 .volume-slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 4px;
-  background: #535353; /* Cor da barra não preenchida */
+  background: #535353;
   border-radius: 2px;
   transition: background 0.2s ease;
 }
 
-/* Estilo do botão (thumb) para WebKit */
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;         /* Diâmetro do botão */
+  width: 12px;
   height: 12px;
-  background: #ffffff; /* Cor do botão */
-  border-radius: 50%;  /* Redondo */
-  border: none;        /* Sem borda no botão */
-  margin-top: -4px;    /* Ajusta a posição vertical para centralizar o botão na track */
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.4); /* Sombra e leve "glow" */
+  background: #ffffff;
+  border-radius: 50%;
+  border: none;
+  margin-top: -4px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.4);
   cursor: grab;
   transition: all 0.2s ease-in-out;
 }
 
-/* Efeito hover/active no botão para WebKit */
 .volume-slider::-webkit-slider-thumb:hover,
 .volume-slider::-webkit-slider-thumb:active {
-  background: #1DB954; /* Verde Spotify ao passar o mouse/clicar */
-  transform: scale(1.1); /* Aumenta um pouco o tamanho */
-  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6); /* Glow verde */
+  background: #1DB954;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-/* Estilo da barra (track) para Firefox */
 .volume-slider::-moz-range-track {
   width: 100%;
   height: 4px;
@@ -714,7 +728,6 @@ main {
   border-radius: 2px;
 }
 
-/* Estilo do botão (thumb) para Firefox */
 .volume-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
@@ -725,7 +738,6 @@ main {
   transition: all 0.2s ease-in-out;
 }
 
-/* Efeito hover/active no botão para Firefox */
 .volume-slider::-moz-range-thumb:hover,
 .volume-slider::-moz-range-thumb:active {
   background: #1DB954;
@@ -733,29 +745,25 @@ main {
   box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-/* Estilo da barra (track) para IE/Edge (sintaxe mais antiga) */
 .volume-slider::-ms-track {
   width: 100%;
   height: 4px;
-  background: transparent; /* Oculta a track padrão */
+  background: transparent;
   border-color: transparent;
   border-width: 6px 0;
   color: transparent;
 }
 
-/* Estilo da parte preenchida (inferior) para IE/Edge */
 .volume-slider::-ms-fill-lower {
-  background: #1DB954; /* Verde para a parte preenchida */
+  background: #1DB954;
   border-radius: 2px;
 }
 
-/* Estilo da parte não preenchida (superior) para IE/Edge */
 .volume-slider::-ms-fill-upper {
-  background: #535353; /* Cor para a parte não preenchida */
+  background: #535353;
   border-radius: 2px;
 }
 
-/* Estilo do botão (thumb) para IE/Edge */
 .volume-slider::-ms-thumb {
   width: 12px;
   height: 12px;
@@ -767,20 +775,9 @@ main {
   transition: all 0.2s ease-in-out;
 }
 
-/* Efeito hover/active no botão para IE/Edge */
 .volume-slider::-ms-thumb:hover,
 .volume-slider::-ms-thumb:active {
   background: #1DB954;
   transform: scale(1.1);
   box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6);
-}
-
-.album-container:has(.album-card[style*="display: flex"]) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 25px;
-}
-
-.album-card.hidden {
-  display: none !important;
 }
